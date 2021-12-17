@@ -23,6 +23,10 @@ React, Bootstrap
 Back-end:
 Django, Python
 
+# API's
+
+[Plant Hardiness Zone](https://rapidapi.com/fireside-worldwide-fireside-worldwide-default/api/plant-hardiness-zone/)
+
 # Wireframes
 
 [wireframe](https://imgur.com/CcMmucE)
