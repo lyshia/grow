@@ -5,13 +5,14 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Login = (props) => {
 	const navigate = useNavigate();
 	const apiCall = 'http://localhost:8000/sign-in/';
 
 	const [user, setUser] = useState({
-		username: '',
+		email: '',
 		password: '',
 	});
 
@@ -21,25 +22,30 @@ const Login = (props) => {
 		setUser({ ...user, [event.target.name]: event.target.value });
 	};
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
 
-		fetch(apiCall, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(user),
-		})
-			.then((res) => res.json())
-			.then((data) => {
-                console.log(data)
-				//props.setUserId(data.user._id);
-				// setRedirect(true);
-				// navigateTo();
+		const userLogin = await axios
+			.post(apiCall, {
+				user: user,
+				headers: {
+					'Content-Type': 'application/json',
+				},
+		
+
 			})
-			.catch((e) => console.log(e));
+
+			.then(function(response) {
+				console.log('logged user', userLogin);
+				console.log(response);
+			})
+			.catch(function(error) {
+				console.log(error);
+			});
+
+		console.log('logged user', userLogin);
 	};
+
 
 	const navigateTo = () => {
 		if (redirect) {
@@ -49,7 +55,6 @@ const Login = (props) => {
 
 	return (
 		<Container>
-		
 			<p> Let's get planting</p>
 
 			<Card style={{ width: '20rem' }}>
@@ -60,9 +65,9 @@ const Login = (props) => {
 							<Form.Label>Email</Form.Label>
 							<Form.Control
 								type='email'
-								name='username'
+								name='email'
 								className='user'
-								value={user.username}
+								value={user.email}
 								placeholder='Enter email'
 								onChange={handleChange}
 							/>

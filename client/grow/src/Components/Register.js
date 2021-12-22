@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Form, Button } from 'react-bootstrap';
+import axios from 'axios';
 
 const Register = () => {
 	const navigate = useNavigate();
 
-	const apiCall = '';
+	const apiCall = 'http://localhost:8000/sign-up/';
 
 	// set information for the new uesr
 	const [user, setUser] = useState({
-		username: '',
+		email: '',
 		password: '',
 	});
 
@@ -18,23 +19,33 @@ const Register = () => {
 		setUser({ ...user, [event.target.name]: event.target.value });
 	};
 
-
 	// submit registration
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
 
-		// if they are an owner
-		fetch(apiCall, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(user),
-		})
-			.then((res) => res.json())
-			.then((data) => {
-				console.log('new owner created');
+		const newUser = await axios
+			.post(apiCall, {
+				user: user,
+			})
+			.then(function(response) {
+				console.log(response);
+			})
+			.catch(function(error) {
+				console.log(error);
 			});
+
+		// if they are an owner
+		// fetch(apiCall, {
+		// 	method: 'POST',
+		// 	headers: {
+		// 		'Content-Type': 'application/json',
+		// 	},
+		// 	body: JSON.stringify(user),
+		// })
+		// .then((res) => res.json())
+		// .then((data) => {
+		// 	console.log('new owner created');
+		// });
 		navigate('/');
 	};
 
@@ -71,10 +82,6 @@ const Register = () => {
 					Submit
 				</Button>
 			</Form>
-
-
-
-            
 		</div>
 	);
 };
