@@ -1,10 +1,10 @@
-
 from django.db import models
 
 # Create your models here.
 
+
 class GrowZone(models.Model):
-    zone_name = models.CharField(primary_key=True, max_length=4)
+    zone_name = models.CharField(primary_key=True, max_length=4, default='8a')
     lowest_temp = models.IntegerField()
     average_last_frost = models.DateField(auto_now=False, null=True)
     average_first_frost = models.DateField(auto_now=False, null=True)
