@@ -1,0 +1,7 @@
+.review-text-visible {
+	display: block !important;
+}
+
+.review-text-invisible {
+	display: none !important;
+}

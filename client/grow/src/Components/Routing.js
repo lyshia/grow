@@ -9,8 +9,7 @@ const Routing = () => {
   	// const [userId, setUserId] = useState({});
 
 	return (
-		<Routes>
-			
+		<Routes>			
 			<Route path='/Grow' element={<LandingPage />} />
 			<Route path='/plants-list' element={<PlantList />} />
 			<Route path='/Register' element={<Register />} />

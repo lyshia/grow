@@ -2,11 +2,15 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
+import './styles/register.css'
 
 const Register = () => {
 	const navigate = useNavigate();
 
 	const apiCall = 'http://localhost:8000/sign-up/';
+
+    // set message for newly created account 
+    const [active, setActive] = useState(false);
 
 	// set information for the new uesr
 	const [user, setUser] = useState({
@@ -29,25 +33,22 @@ const Register = () => {
 			})
 			.then(function(response) {
 				console.log(response);
+                console.log("New user created")
+                setActive(true);
+                setNavigation()
 			})
 			.catch(function(error) {
 				console.log(error);
-			});
-
-		// if they are an owner
-		// fetch(apiCall, {
-		// 	method: 'POST',
-		// 	headers: {
-		// 		'Content-Type': 'application/json',
-		// 	},
-		// 	body: JSON.stringify(user),
-		// })
-		// .then((res) => res.json())
-		// .then((data) => {
-		// 	console.log('new owner created');
-		// });
-		navigate('/');
+			});	
 	};
+
+    // allow the creation message to show up, and then redirect to home page to log in 
+    const setNavigation = () =>(
+     setTimeout(() => {
+			navigate('/');
+		}, 5000)
+    )
+
 
 	return (
 		<div>
@@ -81,6 +82,12 @@ const Register = () => {
 				<Button variant='primary' type='submit'>
 					Submit
 				</Button>
+				<Form.Group	className={ active ? 'mb-3 review-text-visible' : 'mb-3 review-text-invisible'
+					}
+					controlId='userCreated'>
+					<Form.Label>New user created. Redirecting to Login </Form.Label>			
+			
+				</Form.Group>
 			</Form>
 		</div>
 	);

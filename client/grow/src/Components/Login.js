@@ -31,21 +31,28 @@ const Login = (props) => {
 				headers: {
 					'Content-Type': 'application/json',
 				},
-		
-
 			})
-
 			.then(function(response) {
-				console.log('logged user', userLogin);
 				console.log(response);
+				console.log('logged user', userLogin);
+				redirect = true;
+				navigateTo()
 			})
 			.catch(function(error) {
 				console.log(error);
 			});
 
-		console.log('logged user', userLogin);
+		
 	};
 
+	// fetch(apiCall, {
+	// 	method: 'POST',
+	// 	headers: {
+	// 		'Content-Type': 'application/json',
+	// 		'Accept': 'application/json',
+	// 	},
+	// 	body: JSON.stringify(user),
+	// })
 
 	const navigateTo = () => {
 		if (redirect) {
