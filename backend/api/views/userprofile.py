@@ -34,17 +34,42 @@ class UserProfileView(APIView):
         data = UserProfileSerializer(profile).data
         return Response(data)
 
+    def post(self, request, pk):
+        print("request", request.data)
+        profile = get_object_or_404(UserProfile, pk=pk)
+        data = UserProfileSerializer(profile).data
+
+        if profile.is_valid():
+            profile.save()
+            return Response(profile.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(profile.errors, status=status.HTTP_400_BAD_REQUEST)
+
     def delete(self, request, pk):
         profile = get_object_or_404(UserProfile, pk=pk)
         profile.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     def patch(self, request, pk):
+        print("request",request)
+        print("request2", dir(request))
+        print("AUTHENTICATORS::", request.authenticators)
+        print("AUTHENTICATORS at 0::", request.authenticators[0])
+        print("AUTHENTICATORS at 1::", dir(request.authenticators[0]))
+        print("AUTHENTICATS ", request.authenticators[0].authenticate )
+        print("AUTHENTICATS  CREDENTIALS",
+              request.authenticators[0].authenticate_credentials)
+        print("AUTHENTICATS HEADER ", request.authenticators[0].authenticate_header)
+        #authenticate', 'authenticate_credentials', 'authenticate_header'
+        # print("AUTH:::", request.auth)
+        # print("DAT::", request.data)
         profile = get_object_or_404(UserProfile, pk=pk)
         updated_profile = UserProfileSerializer(profile, data=request.data)
         if updated_profile.is_valid():
             updated_profile.save()
             return Response(updated_profile.data)
+        else:
+            return Response(updated_profile.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, pk):
         profile = get_object_or_404(UserProfile, pk=pk)

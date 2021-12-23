@@ -6,7 +6,7 @@ from .views.userprofile import UserProfilesView, UserProfileView
 
 urlpatterns = [
     path('grow-zone/', GrowZonesView.as_view(), name='grow-zones'),
-    path('grow-zone/<int:pk>/', GrowZoneView.as_view(), name='grow-zone'),
+    path('grow-zone/<pk>/', GrowZoneView.as_view(), name='grow-zone'),
     path('plants/', PlantsView.as_view(), name='plants'),
     path('plants/<int:pk>/', PlantView.as_view(), name='plant-view'),
     path('sign-up/', SignUp.as_view(), name='sign-up'),
