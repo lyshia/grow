@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -18,6 +18,9 @@ const Login = (props) => {
 
 	const [redirect, setRedirect] = useState(false);
 
+	const [errors, setErrors] = useState(false);
+	const [loading, setLoading] = useState(true);
+
 	const handleChange = (event) => {
 		setUser({ ...user, [event.target.name]: event.target.value });
 	};
@@ -30,43 +33,41 @@ const Login = (props) => {
 				user: user,
 				headers: {
 					'Content-Type': 'application/json',
+					'Authorization': 'Token ' + localStorage.token
 				},
 			})
 			.then(function(response) {
-				console.log(response);
-				console.log('logged user', userLogin);
-				redirect = true;
-				navigateTo()
+				if (response.data) {
+					localStorage.clear()
+					localStorage.setItem("token" , response.data.user.token)
+					localStorage.setItem("id", response.data.user.id)
+				}
+				setRedirect(true);
+				navigateTo();
 			})
 			.catch(function(error) {
+				setUser({ email: '', password: '' });
+				setErrors(true);
+				localStorage.clear();
 				console.log(error);
 			});
-
-		
 	};
-
-	// fetch(apiCall, {
-	// 	method: 'POST',
-	// 	headers: {
-	// 		'Content-Type': 'application/json',
-	// 		'Accept': 'application/json',
-	// 	},
-	// 	body: JSON.stringify(user),
-	// })
 
 	const navigateTo = () => {
 		if (redirect) {
-			navigate('/grow');
+			navigate('/dashboard');
 		}
 	};
 
 	return (
 		<Container>
 			<p> Let's get planting</p>
-
 			<Card style={{ width: '20rem' }}>
 				<Card.Body>
 					<Card.Title>Log in</Card.Title>
+					{errors === true && (
+						<Form.Text> Cannot log in with credentials </Form.Text>
+					)}
 					<Form>
 						<Form.Group className='mb-3' controlId='formBasicEmail'>
 							<Form.Label>Email</Form.Label>
