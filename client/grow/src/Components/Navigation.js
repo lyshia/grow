@@ -24,13 +24,15 @@ const Navigation = (props) => {
 						<Link Link to='/plants' className='link'>
 							Plants
 						</Link>
+						<Link Link to='/grow-zones' className='link'>
+							Grow Zones
+						</Link>
 						<Link Link to='/login' className='link'>
 							Login
 						</Link>
 						<Link Link to='/register' className='link'>
 							Register
 						</Link>
-					
 					</Nav>
 				</Navbar.Collapse>
 			</Container>

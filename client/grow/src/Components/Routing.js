@@ -7,14 +7,9 @@ import Login from './Login';
 import Dashboard from './Dashboard';
 import UserProfile from './UserProfile';
 import PlantSearch from './PlantSearch';
+import GrowZones from './GrowZones';
 
 const Routing = () => {
-  	 const [userId, setUserId] = useState({
-		   id: '',
-		   email: '',
-		   token: ''
-	   });
-
 
 	return (
 		<Routes>
@@ -24,6 +19,7 @@ const Routing = () => {
 			<Route path='/login' element={<Login  />} />
 			<Route path='/profile' element={ <UserProfile /> } />
 			<Route path='/plants' element={<PlantSearch />} />
+			<Route path='/grow-zones' element={<GrowZones />} />
 			<Route path='/' element={<Welcome  />} />
 		</Routes>
 	);
