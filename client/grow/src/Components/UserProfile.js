@@ -4,10 +4,19 @@ import { Modal } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 const UserProfile = (props) => {
+	const navigate = useNavigate();
+
 	const [show, setShow] = useState(false);
-	const [inputVal, setInputVal] = useState({id: '', name: '', zipcode: '', zone: '' });
+	const [inputVal, setInputVal] = useState({
+		id: '',
+		name: '',
+		zipcode: '',
+		zone: '',
+	});
 
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
@@ -16,8 +25,8 @@ const UserProfile = (props) => {
 		setInputVal({ ...inputVal, [e.target.name]: e.target.value });
 	};
 
-    // Use Hardiness Zone API to get the Grow Zone for your area
-    const handleSearch = async (event) => {
+	// Use Hardiness Zone API to get the Grow Zone for your area
+	const handleSearch = async (event) => {
 		event.preventDefault();
 		const getZip = await axios
 			.get(
@@ -33,74 +42,51 @@ const UserProfile = (props) => {
 			)
 			.then(function(response) {
 				if (response.data) {
-					setInputVal({zone: response.data.hardiness_zone})
+					setInputVal({ zone: response.data.hardiness_zone });
 				}
-			
 			})
 			.catch(function(error) {
 				console.log(error);
 			});
-		
 	};
 
-	const handleSubmit = async  (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
-		
-		if (localStorage.getItem("token") !== null) {
 
+		if (localStorage.getItem('token') !== null) {
 			const headers = {
-				'Content-Type' : 'application/json',
+				'Content-Type': 'application/json',
 				Accept: 'application/json',
 				Authorization: 'Token ' + localStorage.token,
 			};
 
 			const ID = localStorage.getItem('id');
 
-			fetch(`http://localhost:8000/profile-view/${localStorage.id}/`,{
-				method: "PATCH",
+			fetch(`http://localhost:8000/profile-view/${localStorage.id}/`, {
+				method: 'POST',
 				headers: headers,
 				body: JSON.stringify({
 					id: parseInt(ID),
 					name: inputVal.name,
 					zipcode: parseInt(inputVal.zipcode),
-					zone: inputVal.zone
-				})
-				})
-			.then(function(response) {
-				if (response) {
-                    console.log(response)
-				}
+					zone: inputVal.zone,
+				}),
 			})
-			.catch(function(error) {
-				console.log(error);
-			});
-
+				.then(function(response) {
+					if (response) {
+						console.log(response);
+					}
+				})
+				.catch(function(error) {
+					console.log(error);
+				});
 		}
-
-            // const postInfo = await axios
-			// .post(`http://localhost:8000/profile-view/${localStorage.id}/`, {
-			// 	inputVal,
-			// 	headers: headers,
-			// })
-			// .then(function(response) {
-			// 	if (response) {
-            //         console.log(response)
-			// 	}
-			// })
-			// .catch(function(error) {
-			// 	console.log(error);
-			// });
-		}
-	
-
-
-	// const [loading, setLoading] = useState(true);
+	};
 
 	useEffect(() => {
-		// if (localStorage.getItem('token') === null) {
-		// 	window.location.replace('http://localhost:3001/login');
-		// } else {
-			if (localStorage.token ) {
+		if (localStorage.getItem('token') === null) {
+			navigate('/');
+		} else {
 			fetch('http://localhost:8000/profile-view/' + localStorage.id + '/', {
 				method: 'GET',
 				headers: {
@@ -110,7 +96,7 @@ const UserProfile = (props) => {
 			})
 				.then((res) => res.json())
 				.then((data) => {
-					console.log("api call local storage",localStorage.token)
+					console.log('api call local storage', localStorage.token);
 					setInputVal({
 						id: localStorage.id,
 						name: data.name,
@@ -119,14 +105,14 @@ const UserProfile = (props) => {
 					});
 					// setLoading(false);
 				});
-		 }
+		}
 	}, []);
 
 	return (
 		<Container>
 			<h1> User Profile</h1>
 
-			<h4> Name:  {inputVal.name}</h4>
+			<h4> Name: {inputVal.name}</h4>
 			<h4> Zip Code: {inputVal.zipcode}</h4>
 			<h4> Growing Zone: {inputVal.zone}</h4>
 
@@ -180,10 +166,12 @@ const UserProfile = (props) => {
 						<Button variant='primary' type='submit'>
 							Submit
 						</Button>
-
 					</Form>
 				</Modal.Body>
 			</Modal>
+			<Link to='/dashboard' className='btn btn-primary'>
+				Back
+			</Link>
 		</Container>
 	);
 };

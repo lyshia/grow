@@ -1,39 +1,32 @@
 import React, {useState, useEffect} from 'react';
-
+import { useNavigate } from 'react-router';
 
 
 const PlantList = (props) => {
 
-	// const apiCall = 'http://localhost:8000/plants/';
+	const navigate = useNavigate();
+	const [plants, setPlants] = useState([]);
 
-	// const [plants, setPlants] = useState([]);
+	useEffect(() => {
+		if (localStorage.getItem('token') === null) {
+			navigate('/');
+		} else {
+			const headers = {
+				'Content-Type': 'application/json',
+				Authorization: 'Token ' + localStorage.token,
+			};
 
-	// const showPlants = plants.map((plant, i) => {
-	// // 	return (
-	// 		<li className='view-plant' key={i}>
-	// 			{plant.name}
-
-	// 			<Link to={'/pokemon/' + poke.name}>Add to List</Link>
-	// 		</li>
-	// 	);
-	// });
-
-	// const makeApiCall = (api) => {
-	// 	fetch(api)
-	// 		.then((res) => {
-	// 			return res.json();
-	// 		})
-	// 		.then((json) => {
-	// 			//console.log(json.results);
-	// 			setPlants(json.results);
-	// 		});
-	// };
-
-	// useEffect(() => {
-	// 	const api = apiCall;
-	// 	makeApiCall(api);
-	// }, []);
-
+			fetch('http://localhost:8000/plantslist/', {
+				method: 'GET',
+				headers: headers,
+			})
+				.then((response) => response.json())
+				.then((data) => {
+					console.log('plant search', data);
+					setPlants(data);
+				});
+		}
+	}, []);
 
 
 

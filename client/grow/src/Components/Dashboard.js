@@ -11,7 +11,7 @@ const Dashboard = (props) => {
 		zone: '',
 	});
 
-	const [redirect, setRedirect] = useState(false);
+	// const [redirect, setRedirect] = useState(false);
 
 	const headers = {
 		'Content-Type': 'application/json',
@@ -19,10 +19,9 @@ const Dashboard = (props) => {
 	};
 
 	useEffect(() => {
-		// if (localStorage.getItem('token') === null) {
-		// 	window.location.replace('http://localhost:3001/login');
-		// } else {
-		if (localStorage.token) {
+		if (localStorage.getItem('token') === null) {
+            navigate('/')
+            } else {
 			fetch('http://localhost:8000/profile-view/' + localStorage.id + '/', {
 				method: 'GET',
 				headers: headers,
@@ -44,7 +43,7 @@ const Dashboard = (props) => {
 
 		if (localStorage.token) {
 			fetch('http://localhost:8000/sign-out/', {
-				method: 'POST',
+				method: 'DELETE',
 				headers: headers,
 			})
 				.then((res) => res.json())

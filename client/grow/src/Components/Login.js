@@ -59,6 +59,13 @@ const Login = (props) => {
 		}
 	};
 
+
+	useEffect(() => {
+		if (localStorage.getItem('token') !== null) {
+			navigate('/dashboard');
+		} 
+	}, []);
+
 	return (
 		<Container>
 			<p> Let's get planting</p>

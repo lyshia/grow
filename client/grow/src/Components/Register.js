@@ -53,7 +53,7 @@ const Register = () => {
 	return (
 		<div>
 			<h1> Registration</h1>
-			<Form onSubmit={handleSubmit}>
+			<Form onSubmit={handleSubmit} style={{ width: '20rem' }}>
 				<Form.Group className='mb-3' controlId='formEmail'>
 					<Form.Label>Email address</Form.Label>
 					<Form.Control
@@ -82,11 +82,12 @@ const Register = () => {
 				<Button variant='primary' type='submit'>
 					Submit
 				</Button>
-				<Form.Group	className={ active ? 'mb-3 review-text-visible' : 'mb-3 review-text-invisible'
+				<Form.Group
+					className={
+						active ? 'mb-3 review-text-visible' : 'mb-3 review-text-invisible'
 					}
 					controlId='userCreated'>
-					<Form.Label>New user created. Redirecting to Login </Form.Label>			
-			
+					<Form.Label>New user created. Redirecting to Login </Form.Label>
 				</Form.Group>
 			</Form>
 		</div>
