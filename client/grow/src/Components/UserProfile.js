@@ -126,6 +126,10 @@ const UserProfile = (props) => {
 		<Container>
 			<h1> User Profile</h1>
 
+			<h4> Name:  {inputVal.name}</h4>
+			<h4> Zip Code: {inputVal.zipcode}</h4>
+			<h4> Growing Zone: {inputVal.zone}</h4>
+
 			<Button variant='primary' onClick={handleShow}>
 				Edit
 			</Button>
