@@ -11,6 +11,7 @@ pytz = "*"
 django-cors-headers = "*"
 django-heroku = "*"
 gunicorn = "*"
+django-on-heroku = "*"
 
 [dev-packages]
 
