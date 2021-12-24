@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Card } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 const PlantsSearchlist = (props) => {
 
 	const handleClick = (event, index, name) => {
@@ -41,9 +42,13 @@ const PlantsSearchlist = (props) => {
 				<Card className='card' key={i}>
 					<Card.Body>
 						<Card.Title> {plant.name}</Card.Title>
-						<Card.Subtitle onClick={(e) => handleClick(e, i, plant.name)}>
+						<Card.Text>
+							<Row>Sow before last frost:  {plant.days_to_sow} days </Row>
+							<Row>Sow indoors: {(plant.start_indoor).toString()}</Row>
+						</Card.Text>
+						<Card.Text onClick={(e) => handleClick(e, i, plant.name)}>
 							Add to List
-						</Card.Subtitle>
+						</Card.Text>
 					</Card.Body>
 				</Card>
 			);

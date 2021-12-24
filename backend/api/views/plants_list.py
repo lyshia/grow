@@ -10,7 +10,7 @@ from ..models.plants_list import PlantList
 # /plantlists
 
 
-class plantlistsView(APIView):
+class PlantlistsView(APIView):
     # POST / plantlists
     def post(self, request):
         plantlist = PlantListSerializer(data=request.data)
@@ -27,7 +27,7 @@ class plantlistsView(APIView):
         return Response(data)
 
 
-class plantlistView(APIView):
+class PlantlistView(APIView):
     # GET /plantlists/:id
     def get(self, request, pk):
         plantlist = get_object_or_404(PlantList, pk=pk)

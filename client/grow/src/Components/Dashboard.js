@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router';
-
+import PlantList from './PlantList';
 const Dashboard = (props) => {
 	const navigate = useNavigate();
 	const [user, setUser] = useState({
@@ -10,8 +10,6 @@ const Dashboard = (props) => {
 		zipcode: '',
 		zone: '',
 	});
-
-	// const [redirect, setRedirect] = useState(false);
 
 	const headers = {
 		'Content-Type': 'application/json',
@@ -60,6 +58,8 @@ const Dashboard = (props) => {
 			<Container>
 				<h1>Dashboard</h1>
 				<h4> hello {user.name}</h4>
+
+				<PlantList />
 
 				<Link to='/profile' className='btn btn-primary'> Edit profile</Link>
 

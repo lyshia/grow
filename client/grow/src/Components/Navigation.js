@@ -22,7 +22,7 @@ const Navigation = (props) => {
 							Dashboard
 						</Link>
 						<Link Link to='/plants' className='link'>
-							Plants
+							Plant Library
 						</Link>
 						<Link Link to='/grow-zones' className='link'>
 							Grow Zones

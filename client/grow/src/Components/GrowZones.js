@@ -23,7 +23,6 @@ const GrowZones = (props) => {
 			})
 				.then((response) => response.json())
 				.then((data) => {
-					console.log('plant search', data);
 					setZones(data);
 				});
 		}
